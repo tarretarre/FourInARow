@@ -1,9 +1,4 @@
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
@@ -15,11 +10,6 @@ public class FourClient {
     private BufferedReader in;
     private PrintWriter out;
 
-
-    /**
-     * Constructs the client by connecting to a server, laying out the
-     * GUI and registering GUI listeners.
-     */
     public FourClient(String serverAddress) throws Exception {
 
         System.out.println("KLient i metod");
@@ -27,8 +17,8 @@ public class FourClient {
         in = new BufferedReader(new InputStreamReader(
                 socket.getInputStream()));
         out = new PrintWriter(socket.getOutputStream(), true);
-
-GameBoard g = new GameBoard();
+        GameBoard g = new GameBoard();
+        g.drawGameBoard();
     }
 
     /**
@@ -65,7 +55,7 @@ GameBoard g = new GameBoard();
     public static void main(String[] args) throws Exception {
         System.out.println("klient");
         while (true) {
-            String serverAddress = (args.length == 0) ? "localhost" : args[1];
+            String serverAddress = "127.0.0.1";
             FourClient client = new FourClient(serverAddress);
             client.play();
         }

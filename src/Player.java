@@ -4,15 +4,6 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 
-
-/**
- * The class for the helper threads in this multithreaded server
- * application. A Player is identified by a character mark
- * which is either 'X' or 'O'. For communication with the
- * client the player has a socket with its input and output
- * streams. Since only text is being communicated we use a
- * reader and a writer.
- */
 class Player extends Thread {
     String mark;
     Player opponent;
@@ -20,11 +11,6 @@ class Player extends Thread {
     BufferedReader input;
     PrintWriter output;
 
-    /**
-     * Constructs a handler thread for a given socket and mark
-     * initializes the stream fields, displays the first two
-     * welcoming messages.
-     */
     public Player(Socket socket, String mark) {
         this.socket = socket;
         this.mark = mark;
@@ -33,21 +19,13 @@ class Player extends Thread {
                     new InputStreamReader(socket.getInputStream()));
             output = new PrintWriter(socket.getOutputStream(), true);
         } catch (IOException e) {
-            System.out.println("Player died: " + e);
+            e.printStackTrace();
         }
     }
-
-    /*
-    Sends data to client
-     */
 
     public void send(String mess){
         output.println(mess);
     }
-
-/*
-Receives data from client
-*/
 
     public String receive()  {
         try {
@@ -58,17 +36,10 @@ Receives data from client
         }
     }
 
-
-    /**
-     * Accepts notification of who the opponent is.
-     */
     public void setOpponent(Player opponent) {
         this.opponent = opponent;
     }
 
-    /**
-     * Returns the opponent.
-     */
     public Player getOpponent() {
         return opponent;
     }
